@@ -13,3 +13,13 @@ create table if not exists agencia(
     cnpj text not null,
     endereco_id int references endereco
 );
+
+alter table if exists Agencia alter column id set data type bigint;
+alter table if exists Agencia alter column cnpj set data type varchar(255);
+alter table if exists Agencia alter column nome set data type varchar(255);
+alter table if exists Agencia alter column razao_social set data type varchar(255);
+alter table if exists Agencia alter column endereco_id set data type bigint;
+alter table if exists Endereco alter column id set data type bigint;
+alter table if exists Endereco alter column complemento set data type varchar(255);
+alter table if exists Endereco alter column logradouro set data type varchar(255);
+alter table if exists Endereco alter column rua set data type varchar(255);
