@@ -23,6 +23,17 @@ public class Agencia {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
+    public Agencia() {
+    }
+
+    public Agencia(Long id, String nome, String razaoSocial, String cnpj, Endereco endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+    }
+
     public Long getId() {
         return id;
     }
@@ -41,5 +52,16 @@ public class Agencia {
 
     public Endereco getEndereco() {
         return endereco;
+    }
+
+    @Override
+    public String toString() {
+        return "Agencia{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", razaoSocial='" + razaoSocial + '\'' +
+                ", cnpj='" + cnpj + '\'' +
+                ", endereco=" + endereco +
+                '}';
     }
 }

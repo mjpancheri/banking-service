@@ -16,6 +16,17 @@ public class Endereco {
     private String complemento;
     private Integer numero;
 
+    public Endereco() {
+    }
+
+    public Endereco(Long id, String rua, String logradouro, String complemento, Integer numero) {
+        this.id = id;
+        this.rua = rua;
+        this.logradouro = logradouro;
+        this.complemento = complemento;
+        this.numero = numero;
+    }
+
     public Long getId() {
         return id;
     }
@@ -34,5 +45,16 @@ public class Endereco {
 
     public Integer getNumero() {
         return numero;
+    }
+
+    @Override
+    public String toString() {
+        return "Endereco{" +
+                "id=" + id +
+                ", rua='" + rua + '\'' +
+                ", logradouro='" + logradouro + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", numero=" + numero +
+                '}';
     }
 }
