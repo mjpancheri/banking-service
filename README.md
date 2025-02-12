@@ -53,6 +53,43 @@ You can then execute your native executable with: `./target/banking-service-1.0.
 
 If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
 
+## Connection to Prometheus and Grafana
+
+Add Prometheus dependency and properties
+
+```xml
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-micrometer-registry-prometheus</artifactId>
+</dependency>
+```
+```properties
+quarkus.micrometer.export.prometheus.path=/metrics
+```
+
+Start the Prometheus' container
+
+```shell
+docker run -d --name prometheus \
+  -p 9090:9090 \
+  -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml \
+  prom/prometheus
+```
+
+Start the Grafana's container
+
+```shell
+docker run -d --name grafana -p 3000:3000 grafana/grafana
+```
+
+Configure Prometheus as Grafana's data source
+
+- Access Grafana on `http://localhost:3000`, and logged in
+- Go to Connection > Data Source, click add, and select Prometheus
+- Configure the URL as `http://host.docker.internal:9090`
+- Click on `Save & test` to complete
+
+
 ## Related Guides
 
 - REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.

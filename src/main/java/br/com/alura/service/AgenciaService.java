@@ -6,6 +6,7 @@ import br.com.alura.domain.http.AgenciaHttp;
 import br.com.alura.domain.http.SituacaoCadastral;
 import br.com.alura.repository.AgenciaRepository;
 import br.com.alura.service.http.SituacaoCadastralHttpService;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -17,9 +18,11 @@ public class AgenciaService {
     SituacaoCadastralHttpService situacaoCadastralHttpService;
 
     private final AgenciaRepository agenciaRepository;
+    private final MeterRegistry meterRegistry;
 
-    public AgenciaService(AgenciaRepository agenciaRepository) {
+    public AgenciaService(AgenciaRepository agenciaRepository, MeterRegistry meterRegistry) {
         this.agenciaRepository = agenciaRepository;
+        this.meterRegistry = meterRegistry;
     }
 
     public void cadastrar(Agencia agencia) {
@@ -27,13 +30,16 @@ public class AgenciaService {
 
         if (agenciaHttp == null || !SituacaoCadastral.ATIVO.equals(agenciaHttp.getSituacaoCadastral())) {
             Log.info("Erro ao cadastrar a agencia: " + agencia);
+            meterRegistry.counter("agencia-erro-counter").increment();
             throw new AgenciaNaoAtivaOuNaoEncontradaException();
         }
         agenciaRepository.persist(agencia);
         Log.info("Agencia cadastrada com sucesso: " + agencia);
+        meterRegistry.counter("agencia-adicionada-counter").increment();
     }
 
     public Agencia buscarPorId(Long id) {
+        meterRegistry.counter("agencia-busca-counter").increment();
         return agenciaRepository.findById(id);
     }
 
