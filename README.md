@@ -53,6 +53,27 @@ You can then execute your native executable with: `./target/banking-service-1.0.
 
 If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
 
+## Creating a Docker image
+
+You can create a Docker image using:
+
+```shell
+mvn package "-Dquarkus.container-image.build=true"
+```
+
+You can tag your image using:
+
+```shell
+docker tag pcestudio/banking-service:1.0.0-SNAPSHOT joao0212/banking-service:v2
+```
+
+And you can push it to DockerHub using:
+
+```shell
+docker push joao0212/banking-service:v2
+```
+
+
 ## Connection to Prometheus and Grafana
 
 Add Prometheus dependency and properties
